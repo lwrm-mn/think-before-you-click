@@ -1,4 +1,3 @@
-<!-- Full working file, GitHub-ready -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -193,7 +192,6 @@
     const currentVideo = videos[index];
     currentVideo.play().catch(e => console.warn("Autoplay error", e));
 
-    // Show popup on 4th video
     if (index === 3) {
       setTimeout(() => {
         popupAd.style.display = "block";
@@ -210,6 +208,12 @@
   }
 
   function showForm() {
+    // Stop all videos when transitioning to form
+    videos.forEach(video => {
+      video.pause();
+      video.currentTime = 0;
+    });
+
     reelsContainer.style.display = "none";
     document.getElementById("formSection").style.display = "flex";
   }
