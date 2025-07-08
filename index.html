@@ -1,3 +1,4 @@
+<!-- Full working file, GitHub-ready -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,85 +7,82 @@
   <title>Think Before You Click!</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
+    html, body {
+      width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: Arial, sans-serif;
       background: #000;
-      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .screen, .form-section, .blackout {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
     }
 
     .screen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       flex-direction: column;
       z-index: 1;
+      background: #111;
+      color: white;
     }
 
-    .hidden { display: none; }
-
     .btn {
-      padding: 12px 24px;
-      font-size: 1rem;
-      background: #222;
+      background: #555;
       color: #fff;
       border: none;
-      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin-top: 20px;
       cursor: pointer;
     }
 
     .reels-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+      display: none;
       overflow: hidden;
       z-index: 2;
     }
 
     .reels-track {
       display: flex;
-      width: 400%;
-      height: 100%;
       transition: transform 0.3s ease;
+      height: 100%;
     }
 
     .reel {
       flex: 0 0 100%;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       background: black;
+      position: relative;
     }
 
     video {
       width: 100%;
       height: 100%;
-      max-height: 100vh;
       object-fit: contain;
       background: black;
     }
 
     .popup-ad {
+      display: none;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #fff;
-      color: #000;
+      background: white;
+      color: black;
       padding: 20px;
-      border-radius: 10px;
-      border: 2px solid #333;
-      z-index: 9999;
-      display: none;
+      border-radius: 8px;
       text-align: center;
-      width: 80%;
-      max-width: 300px;
+      z-index: 999;
     }
 
     .popup-ad a {
@@ -94,17 +92,14 @@
     }
 
     .form-section {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: #fff;
       display: none;
+      background: #fff;
+      color: #000;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      color: black;
       z-index: 3;
+      gap: 10px;
     }
 
     .form-section input {
@@ -112,71 +107,66 @@
       width: 80%;
       max-width: 300px;
       border: 1px solid #aaa;
-      border-radius: 5px;
+      border-radius: 4px;
     }
 
     .form-section button {
       padding: 10px 20px;
-      margin-top: 10px;
     }
 
     .blackout {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      display: none;
       background: black;
       z-index: 100;
-      display: none;
     }
   </style>
 </head>
 <body>
 
-<!-- Landing Page -->
+<!-- Landing screen -->
 <div class="screen" id="landing">
   <h1>Think Before You Click!</h1>
-  <button class="btn" onclick="goToReels()">FakeBooker</button>
+  <button class="btn" onclick="startApp()">FakeBooker</button>
 </div>
 
-<!-- Reels Interface -->
-<div class="reels-container hidden" id="reelsContainer">
+<!-- Reels -->
+<div class="reels-container" id="reelsContainer">
   <div class="reels-track" id="reelsTrack">
     <div class="reel">
-      <video autoplay playsinline preload="auto">
-        <source src="https://www.dropbox.com/scl/fi/ysabkzg59048hyjti5i18/clip1.mp4?rlkey=osi70d5ahxgrc8yqbw9juh92y&raw=1" type="video/mp4">
+      <video autoplay playsinline>
+        <source src="clip1.mp4" type="video/mp4">
       </video>
     </div>
     <div class="reel">
-      <video playsinline preload="auto">
-        <source src="https://www.dropbox.com/scl/fi/uppz4ta37y2x1wq7ez10b/clip2.mp4?rlkey=b31mqlrpw3bd8h1z82zglaoep&raw=1" type="video/mp4">
+      <video playsinline>
+        <source src="clip2.mp4" type="video/mp4">
       </video>
     </div>
     <div class="reel">
-      <video playsinline preload="auto">
-        <source src="https://www.dropbox.com/scl/fi/fviqmmpptgqhv9wobfu7b/clip3.mp4?rlkey=19dh9zn74m4lazu67knsjffqd&raw=1" type="video/mp4">
+      <video playsinline>
+        <source src="clip3.mp4" type="video/mp4">
       </video>
     </div>
     <div class="reel" id="reel4">
-      <video playsinline preload="auto">
-        <source src="https://www.dropbox.com/scl/fi/eacpq44k11vpdmajqjy51/clip4.mp4?rlkey=b6r50s0e3s3j4p4wt8hkg3d6b&raw=1" type="video/mp4">
+      <video playsinline>
+        <source src="clip4.mp4" type="video/mp4">
       </video>
-      <div class="popup-ad" id="popup">
+      <div class="popup-ad" id="popupAd">
         <p>🎉 Congratulations!<br>You’ve won a brand-new flat-screen TV!<br><br>
-        <a onclick="showPhishing()">Click here to claim your prize!</a></p>
+        <a onclick="showForm()">Click here to claim your prize!</a></p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Phishing Form -->
+<!-- Phishing form -->
 <div class="form-section" id="formSection">
   <h2>Claim Your Prize</h2>
   <input type="text" placeholder="Full Name" />
-  <input type="text" placeholder="Address" />
   <input type="email" placeholder="Email" />
   <input type="tel" placeholder="Phone Number" />
-  <button onclick="freeze()">Submit</button>
+  <input type="text" placeholder="Home Address" />
+  <button onclick="freezePage()">Submit</button>
 </div>
 
 <!-- Blackout -->
@@ -186,29 +176,27 @@
   const reelsContainer = document.getElementById("reelsContainer");
   const reelsTrack = document.getElementById("reelsTrack");
   const videos = reelsTrack.querySelectorAll("video");
+  const popupAd = document.getElementById("popupAd");
   let currentIndex = 0;
-  let popupTimer = null;
 
-  function goToReels() {
-    document.getElementById("landing").classList.add("hidden");
-    reelsContainer.classList.remove("hidden");
+  function startApp() {
+    document.getElementById("landing").style.display = "none";
+    reelsContainer.style.display = "block";
     playVideo(0);
   }
 
   function playVideo(index) {
-    videos.forEach((vid, i) => {
-      vid.pause();
-      vid.currentTime = 0;
+    videos.forEach((video, i) => {
+      video.pause();
+      video.currentTime = 0;
     });
-
     const currentVideo = videos[index];
-    currentVideo.play().catch(err => {
-      console.warn("Autoplay error:", err);
-    });
+    currentVideo.play().catch(e => console.warn("Autoplay error", e));
 
-    if (index === 3 && !popupTimer) {
-      popupTimer = setTimeout(() => {
-        document.getElementById("popup").style.display = "block";
+    // Show popup on 4th video
+    if (index === 3) {
+      setTimeout(() => {
+        popupAd.style.display = "block";
       }, 7000);
     }
 
@@ -221,27 +209,27 @@
     };
   }
 
-  function showPhishing() {
-    reelsContainer.classList.add("hidden");
+  function showForm() {
+    reelsContainer.style.display = "none";
     document.getElementById("formSection").style.display = "flex";
   }
 
-  function freeze() {
+  function freezePage() {
     document.getElementById("formSection").style.display = "none";
     document.getElementById("blackout").style.display = "block";
   }
 
-  let startX = 0;
+  let touchStartX = 0;
 
   reelsContainer.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
+    touchStartX = e.touches[0].clientX;
   });
 
   reelsContainer.addEventListener("touchend", e => {
-    const endX = e.changedTouches[0].clientX;
-    if (endX < startX - 50 && currentIndex < videos.length - 1) {
+    const touchEndX = e.changedTouches[0].clientX;
+    if (touchEndX < touchStartX - 50 && currentIndex < videos.length - 1) {
       currentIndex++;
-    } else if (endX > startX + 50 && currentIndex > 0) {
+    } else if (touchEndX > touchStartX + 50 && currentIndex > 0) {
       currentIndex--;
     }
     reelsTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
